@@ -1,0 +1,598 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Javier Bonilla — Ethereum Developer</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --blue: #2563eb;
+      --blue-dark: #1d4ed8;
+      --amber: #f59e0b;
+      --gray-900: #111827;
+      --gray-600: #4b5563;
+      --gray-400: #9ca3af;
+      --gray-200: #e5e7eb;
+      --bg: #f9fafb;
+      --white: #ffffff;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--gray-900);
+      font-family: 'DM Sans', sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── NAV ── */
+    header {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      background: rgba(249,250,251,0.85);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--gray-200);
+      z-index: 50;
+    }
+
+    .nav-inner {
+      max-width: 72rem;
+      margin: 0 auto;
+      padding: 1rem 1.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .nav-logo {
+      color: var(--blue);
+      font-family: 'Poppins', sans-serif;
+      font-weight: 700;
+      font-size: 1.1rem;
+      text-decoration: none;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 1.5rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: var(--gray-600);
+      font-size: 0.9rem;
+      font-weight: 500;
+      transition: color 0.15s;
+    }
+
+    .nav-links a:hover { color: var(--blue); }
+
+    /* mobile hamburger */
+    .hamburger {
+      display: none;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 0.25rem;
+      color: var(--gray-600);
+    }
+
+    .mobile-menu {
+      display: none;
+      flex-direction: column;
+      gap: 0.25rem;
+      padding: 0.75rem 1.5rem 1rem;
+      border-top: 1px solid var(--gray-200);
+    }
+
+    .mobile-menu.open { display: flex; }
+
+    .mobile-menu a {
+      text-decoration: none;
+      color: var(--gray-600);
+      font-size: 0.9rem;
+      padding: 0.4rem 0;
+      transition: color 0.15s;
+    }
+
+    .mobile-menu a:hover { color: var(--blue); }
+
+    @media (max-width: 640px) {
+      .nav-links { display: none; }
+      .hamburger { display: block; }
+    }
+
+    /* ── SECTIONS ── */
+    section { padding: 8rem 1.5rem; }
+
+    .section-inner {
+      max-width: 72rem;
+      margin: 0 auto;
+    }
+
+    .section-inner-narrow {
+      max-width: 48rem;
+      margin: 0 auto;
+    }
+
+    /* ── HERO ── */
+    #home {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding-top: 6rem;
+    }
+
+    .eyebrow {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin-bottom: 1.25rem;
+    }
+
+    .eyebrow-line {
+      width: 2rem;
+      height: 1px;
+      background: var(--blue);
+    }
+
+    .eyebrow-text {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.85rem;
+      color: var(--blue);
+      letter-spacing: 0.05em;
+    }
+
+    h1 {
+      font-family: 'Poppins', sans-serif;
+      font-size: clamp(3rem, 8vw, 5.5rem);
+      font-weight: 700;
+      line-height: 1.1;
+      color: var(--gray-900);
+      margin-bottom: 0.5rem;
+    }
+
+    .subtitle {
+      font-family: 'Poppins', sans-serif;
+      font-size: clamp(1.5rem, 4vw, 2.5rem);
+      font-weight: 500;
+      color: var(--amber);
+      margin-bottom: 1.5rem;
+    }
+
+    .hero-bio {
+      max-width: 42rem;
+      font-size: 1.05rem;
+      color: var(--gray-600);
+      line-height: 1.75;
+      margin-bottom: 1rem;
+    }
+
+    /* tags */
+    .tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-bottom: 2.25rem;
+    }
+
+    .tag {
+      display: inline-block;
+      padding: 0.2rem 0.75rem;
+      border-radius: 9999px;
+      font-family: 'DM Mono', monospace;
+      font-size: 0.72rem;
+      font-weight: 500;
+      border: 1px solid rgba(37,99,235,0.3);
+      color: var(--blue);
+      background: rgba(37,99,235,0.06);
+    }
+
+    /* CTAs */
+    .cta-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+    }
+
+    .btn-primary {
+      display: inline-block;
+      padding: 0.75rem 1.5rem;
+      border-radius: 0.75rem;
+      background: var(--blue);
+      color: #fff;
+      font-weight: 600;
+      font-size: 0.9rem;
+      text-decoration: none;
+      transition: background 0.15s;
+    }
+
+    .btn-primary:hover { background: var(--blue-dark); }
+
+    .btn-secondary {
+      display: inline-block;
+      padding: 0.75rem 1.5rem;
+      border-radius: 0.75rem;
+      border: 1.5px solid var(--gray-200);
+      color: var(--gray-600);
+      font-weight: 600;
+      font-size: 0.9rem;
+      text-decoration: none;
+      transition: border-color 0.15s, color 0.15s;
+      background: transparent;
+    }
+
+    .btn-secondary:hover {
+      border-color: var(--blue);
+      color: var(--blue);
+    }
+    .btn-third {
+      display: inline-block;
+      padding: 0.75rem 1.5rem;
+      border-radius: 0.75rem;
+      border: 1.5px solid var(--gray-200);
+      color: var(--gray-600);
+      font-weight: 600;
+      font-size: 0.9rem;
+      text-decoration: none;
+      transition: border-color 0.15s, color 0.15s;
+      background: transparent;
+    }
+
+    /* ── SECTION HEADINGS ── */
+    .section-label {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.8rem;
+      color: var(--blue);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 0.5rem;
+    }
+
+    h2 {
+      font-family: 'Poppins', sans-serif;
+      font-size: 2rem;
+      font-weight: 600;
+      color: var(--blue);
+      margin-bottom: 2rem;
+    }
+
+    /* ── PROJECTS ── */
+    #projects {
+      background: var(--white);
+      border-top: 1px solid var(--gray-200);
+    }
+
+    .projects-header {
+      text-align: center;
+      margin-bottom: 3rem;
+    }
+
+    .projects-header p {
+      color: var(--gray-600);
+      max-width: 38rem;
+      margin: 0.75rem auto 0;
+      font-size: 0.95rem;
+      line-height: 1.65;
+    }
+
+    .cards-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .card {
+      display: block;
+      text-decoration: none;
+      padding: 1.5rem;
+      border-radius: 1rem;
+      border: 1px solid var(--gray-200);
+      background: var(--white);
+      transition: box-shadow 0.2s, border-color 0.2s, transform 0.2s;
+    }
+
+    .card:hover {
+      box-shadow: 0 12px 32px rgba(37,99,235,0.1);
+      border-color: rgba(37,99,235,0.35);
+      transform: translateY(-3px);
+    }
+
+    .card h3 {
+      font-family: 'Poppins', sans-serif;
+      font-size: 1.05rem;
+      font-weight: 600;
+      color: var(--gray-900);
+      margin-bottom: 0.5rem;
+      transition: color 0.15s;
+    }
+
+    .card:hover h3 { color: var(--blue); }
+
+    .card p {
+      font-size: 0.875rem;
+      color: var(--gray-600);
+      line-height: 1.65;
+      margin-bottom: 1rem;
+    }
+
+    .card .tags { margin-bottom: 1rem; }
+
+    .card-link {
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--blue);
+      display: flex;
+      align-items: center;
+      gap: 0.25rem;
+    }
+
+    .card:hover .card-link-arrow { transform: translateX(3px); }
+    .card-link-arrow { display: inline-block; transition: transform 0.15s; }
+
+    /* ── ABOUT (What I care about) ── */
+    #about { background: var(--bg); }
+
+    .values-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .value-card {
+      background: var(--white);
+      border: 1px solid var(--gray-200);
+      border-radius: 1rem;
+      padding: 1.5rem;
+    }
+
+    .value-card h3 {
+      font-family: 'Poppins', sans-serif;
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--gray-900);
+      margin-bottom: 0.5rem;
+    }
+
+    .value-card p {
+      font-size: 0.875rem;
+      color: var(--gray-600);
+      line-height: 1.65;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      border-top: 1px solid var(--gray-200);
+      padding: 2rem 1.5rem;
+      text-align: center;
+      font-size: 0.85rem;
+      color: var(--gray-400);
+    }
+
+    footer a {
+      color: var(--gray-400);
+      text-decoration: none;
+      transition: color 0.15s;
+    }
+
+    footer a:hover { color: var(--blue); }
+
+    /* ── ANIMATIONS ── */
+    .fade-up {
+      opacity: 0;
+      transform: translateY(18px);
+      animation: fadeUp 0.55s ease forwards;
+    }
+
+    @keyframes fadeUp {
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .fade-up:nth-child(1) { animation-delay: 0.15s; }
+    .fade-up:nth-child(2) { animation-delay: 0.25s; }
+    .fade-up:nth-child(3) { animation-delay: 0.35s; }
+    .fade-up:nth-child(4) { animation-delay: 0.45s; }
+    .fade-up:nth-child(5) { animation-delay: 0.55s; }
+    .fade-up:nth-child(6) { animation-delay: 0.65s; }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <header>
+    <div class="nav-inner">
+      <a href="#home" class="nav-logo">Javier Bonilla</a>
+      <ul class="nav-links">
+        <li><a href="#home">Home</a></li>
+        <li><a href="#projects">Projects</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="https://over-collat-lending-with-flashloans.vercel.app/" target="_blank" rel="noopener">Lending ↗</a></li>
+        <li><a href="https://dex-sigma-sooty.vercel.app/" target="_blank" rel="noopener">DEX ↗</a></li>
+        <li><a href="https://zk-voting-eta.vercel.app/" target="_blank" rel="noopener">ZK Voting ↗</a></li>
+        <li><a href="https://vending-macchine.vercel.app/" target="_blank" rel="noopener">Token Vendor ↗</a></li>
+        <li><a href="https://decentralized-staking-red-sigma.vercel.app/" target="_blank" rel="noopener">Staking ↗</a></li>
+        <li><a href="https://tokenization-eosin.vercel.app/" target="_blank" rel="noopener">NFTs ↗</a></li>
+      </ul>
+      <button class="hamburger" onclick="document.getElementById('mobile-menu').classList.toggle('open')" aria-label="Toggle menu">
+        <svg width="22" height="22" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+        </svg>
+      </button>
+    </div>
+    <div id="mobile-menu" class="mobile-menu">
+      <a href="#home">Home</a>
+      <a href="#projects">Projects</a>
+      <a href="#about">About</a>
+      <a href="https://decentralized-staking-red-sigma.vercel.app/" target="_blank" rel="noopener">Staking ↗</a>
+      <a href="https://tokenization-eosin.vercel.app/" target="_blank" rel="noopener">NFT Tokenization ↗</a>
+      <a href="https://vending-macchine.vercel.app/" target="_blank" rel="noopener">Token Vendor ↗</a>
+      <a href="https://dex-sigma-sooty.vercel.app/" target="_blank" rel="noopener">DEX ↗</a>
+      <a href="https://over-collat-lending-with-flashloans.vercel.app/" target="_blank" rel="noopener">Lending ↗</a>
+      <a href="https://zk-voting-eta.vercel.app/" target="_blank" rel="noopener">ZK Voting ↗</a>
+    </div>
+  </header>
+
+  <!-- HERO -->
+  <section id="home">
+    <div class="section-inner-narrow">
+      <div class="eyebrow fade-up">
+        <span class="eyebrow-line"></span>
+        <span class="eyebrow-text">Blockchain Developer</span>
+      </div>
+      <h1 class="fade-up">Javier Bonilla</h1>
+      <p class="subtitle fade-up">Software Engineer</p>
+      <p class="hero-bio fade-up">
+        My name is Javier, I graduated from the University of Michigan with a major in computer science. I have a strong interest in blockchain
+        technologies and DeFi protocols and since late 2025 I have been involved in the space through personal projects, attending conferences,
+        youtube videos, and of course twitter(X). I created this portfolio to display protocols I have created on ethereum.      </p>
+      <p class="hero-bio fade-up" style="margin-bottom: 1.75rem;">
+        My technical experience leans towards the fintech area of Blockchain, however I am also interested in governance along with 
+        spreading the technology that I believe can be very beneficial to our society if more people understood and knew how to use it.
+      </p>
+      <div class="tags fade-up">
+        <span class="tag">Smart Contracts</span>
+        <span class="tag">DeFi Protocols</span>
+        <span class="tag">Zero-Knowledge Proofs</span>
+        <span class="tag">AMM Design</span>
+        <span class="tag">NFT Standards</span>
+        <span class="tag">Protocol Architecture</span>
+        <span class="tag">Hardhat</span>
+        <span class="tag">Sepolia Testnet</span>
+      </div>
+      <div class="cta-row fade-up">
+        <a href="#projects" class="btn-primary">View Projects ↓</a>
+        <a href="https://github.com/JavierBonill4" target="_blank" rel="noopener" class="btn-secondary">GitHub →</a>
+        <a href="https://x.com/Javi_4B" target="_blank" rel="noopener" class="btn-secondary">X →</a>
+        <span class="btn-third" style="cursor:default;">Telegram: @javierbonill4</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROJECTS -->
+  <section id="projects">
+    <div class="section-inner">
+      <div class="projects-header">
+        <p class="section-label">On-Chain Work</p>
+        <h2 style="color: var(--gray-900);">Ethereum Projects</h2>
+        <p>Six SpeedRunEthereum challenges — each deployed live on Sepolia. Click any card to open the live app.</p>
+      </div>
+      <div class="cards-grid">
+
+        <a href="https://decentralized-staking-red-sigma.vercel.app/" target="_blank" rel="noopener" class="card">
+          <h3>Decentralized Staking</h3>
+          <p>Stake ETH into a contract with a time-limited deadline and threshold. If enough is raised, funds execute an external contract — otherwise stakers can withdraw.</p>
+          <div class="tags">
+            <span class="tag">ETH Staking</span>
+            <span class="tag">Deadlines</span>
+            <span class="tag">Sepolia</span>
+          </div>
+          <div class="card-link">Launch app <span class="card-link-arrow">→</span></div>
+        </a>
+
+        <a href="https://tokenization-eosin.vercel.app/" target="_blank" rel="noopener" class="card">
+          <h3>NFT Tokenization</h3>
+          <p>ERC-721 NFT collection with on-chain metadata stored on IPFS. Mint, view, and transfer digital assets — ownership verified on-chain.</p>
+          <div class="tags">
+            <span class="tag">ERC-721</span>
+            <span class="tag">IPFS</span>
+            <span class="tag">Sepolia</span>
+          </div>
+          <div class="card-link">Launch app <span class="card-link-arrow">→</span></div>
+        </a>
+
+        <a href="https://vending-macchine.vercel.app/" target="_blank" rel="noopener" class="card">
+          <h3>Token Vendor</h3>
+          <p>A vending machine for ERC-20 tokens. Buy tokens with ETH or sell them back — the vendor contract acts as the always-on market maker at a fixed exchange rate.</p>
+          <div class="tags">
+            <span class="tag">ERC-20</span>
+            <span class="tag">Token Sale</span>
+            <span class="tag">DeFi</span>
+          </div>
+          <div class="card-link">Launch app <span class="card-link-arrow">→</span></div>
+        </a>
+
+        <a href="https://dex-sigma-sooty.vercel.app/" target="_blank" rel="noopener" class="card">
+          <h3>Decentralized Exchange</h3>
+          <p>An Automated Market Maker DEX with liquidity pools. Swap tokens using the constant-product formula, add/remove liquidity, and watch prices update in real time.</p>
+          <div class="tags">
+            <span class="tag">AMM</span>
+            <span class="tag">Liquidity Pools</span>
+            <span class="tag">Uniswap SDK</span>
+          </div>
+          <div class="card-link">Launch app <span class="card-link-arrow">→</span></div>
+        </a>
+
+        <a href="https://over-collat-lending-with-flashloans.vercel.app/" target="_blank" rel="noopener" class="card">
+          <h3>Over-Collateralized Lending</h3>
+          <p>Post ETH as collateral, borrow stablecoins, and manage your health factor. Includes liquidation mechanics and flash loan support.</p>
+          <div class="tags">
+            <span class="tag">Lending</span>
+            <span class="tag">Flash Loans</span>
+            <span class="tag">Collateral</span>
+          </div>
+          <div class="card-link">Launch app <span class="card-link-arrow">→</span></div>
+        </a>
+
+        <a href="https://zk-voting-eta.vercel.app/" target="_blank" rel="noopener" class="card">
+          <h3>ZK Voting</h3>
+          <p>Privacy-preserving governance using zero-knowledge proofs. Cast your vote without revealing your identity — eligibility proven cryptographically, not by disclosure.</p>
+          <div class="tags">
+            <span class="tag">ZK Proofs</span>
+            <span class="tag">Privacy</span>
+            <span class="tag">Governance</span>
+          </div>
+          <div class="card-link">Launch app <span class="card-link-arrow">→</span></div>
+        </a>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="about">
+    <div class="section-inner">
+      <p class="section-label">Background</p>
+      <h2>What I Care About</h2>
+      <div class="values-grid">
+        <div class="value-card">
+          <h3>Decentralization</h3>
+          <p>Building systems where no single party holds the keys, where the rules are code and the code is public.</p>
+        </div>
+        <div class="value-card">
+          <h3>Protocol Design</h3>
+          <p>Working through architecture problems eligantly and creatively on blockchain, not only focusing on 
+            maximizing token emissions or deploying a project without thought.</p>
+          </div>
+          <div class="value-card">
+            <h3>CROPS</h3>
+            <p>Censorship Resistance, Openess, Privacy, Security(CROPS) through public networks. 
+              I believe this is fundimental and truly beneficial for blockchain, and I support 
+              the EF's strives towards this goal.</p>
+          </div>
+        <div class="value-card">
+          <h3>Build!</h3>
+          <p>The world of crypto is still young, applications are limitless whether it's for new DeFi protocols, governance capabilities, 
+            dApp development etc. Might as well build and explore ideas to improve capabilities of blockchain technology.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    Built by Javier Bonilla ·
+    <a href="https://github.com/JavierBonill4" target="_blank" rel="noopener">GitHub</a>
+    · Blockchain Developer · 2025
+  </footer>
+
+</body>
+</html>

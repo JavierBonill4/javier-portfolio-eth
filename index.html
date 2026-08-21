@@ -12,6 +12,8 @@
     :root {
       --blue: #2563eb;
       --blue-dark: #1d4ed8;
+      --purple: #7c3aed;
+      --purple-dark: #6d28d9;
       --amber: #f59e0b;
       --gray-900: #111827;
       --gray-600: #4b5563;
@@ -285,6 +287,69 @@
       line-height: 1.65;
     }
 
+    /* ── CHAIN TOGGLE ── */
+    .chain-toggle {
+      display: inline-flex;
+      gap: 0.25rem;
+      padding: 0.3rem;
+      margin-top: 1.25rem;
+      border: 1px solid var(--gray-200);
+      background: var(--bg);
+      border-radius: 9999px;
+    }
+
+    .chain-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.55rem 1.35rem;
+      border: none;
+      border-radius: 9999px;
+      background: transparent;
+      cursor: pointer;
+      font-family: 'Poppins', sans-serif;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--gray-600);
+      transition: background 0.18s, color 0.18s;
+    }
+
+    .chain-btn:hover { color: var(--gray-900); }
+
+    .chain-dot {
+      width: 0.5rem;
+      height: 0.5rem;
+      border-radius: 50%;
+      background: currentColor;
+      opacity: 0.45;
+      transition: opacity 0.18s;
+    }
+
+    .chain-btn.active .chain-dot { opacity: 1; }
+    .chain-btn.active { color: #fff; }
+    .chain-btn[data-chain="eth"].active { background: var(--blue); }
+    .chain-btn[data-chain="sol"].active { background: var(--purple); }
+    .chain-btn[data-chain="sol"]:hover:not(.active) { color: var(--purple); }
+
+    .panel[hidden] { display: none; }
+    .panel { animation: fadeUp 0.4s ease both; }
+
+    /* Solana panel accents */
+    .panel-sol .card:hover {
+      box-shadow: 0 12px 32px rgba(124,58,237,0.12);
+      border-color: rgba(124,58,237,0.35);
+    }
+
+    .panel-sol .card:hover h3 { color: var(--purple); }
+
+    .panel-sol .tag {
+      border-color: rgba(124,58,237,0.3);
+      color: var(--purple);
+      background: rgba(124,58,237,0.06);
+    }
+
+    .panel-sol .card-link { color: var(--purple); }
+
     .cards-grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
@@ -482,10 +547,19 @@
     <div class="section-inner">
       <div class="projects-header">
         <p class="section-label">On-Chain Work</p>
-        <h2 style="color: var(--gray-900);">Ethereum Projects</h2>
-        <p>Six SpeedRunEthereum challenges — each deployed live on Sepolia. Click any card to open the live app.</p>
+        <h2 id="projects-title" style="color: var(--gray-900); margin-bottom: 0;">Ethereum Projects</h2>
+        <div class="chain-toggle" role="tablist" aria-label="Filter projects by chain">
+          <button type="button" class="chain-btn active" data-chain="eth" role="tab" aria-selected="true" aria-controls="panel-eth">
+            <span class="chain-dot"></span>Ethereum
+          </button>
+          <button type="button" class="chain-btn" data-chain="sol" role="tab" aria-selected="false" aria-controls="panel-sol">
+            <span class="chain-dot"></span>Solana
+          </button>
+        </div>
+        <p id="projects-blurb">Six SpeedRunEthereum challenges — each deployed live on Sepolia. Click any card to open the live app.</p>
       </div>
-      <div class="cards-grid">
+
+      <div class="cards-grid panel panel-eth" id="panel-eth" role="tabpanel">
 
         <a href="https://decentralized-staking-red-sigma.vercel.app/" target="_blank" rel="noopener" class="card">
           <h3>Decentralized Staking</h3>
@@ -554,6 +628,32 @@
         </a>
 
       </div>
+
+      <div class="cards-grid panel panel-sol" id="panel-sol" role="tabpanel" hidden>
+
+        <a href="https://acp-full-frontend-pwq1-swart.vercel.app/" target="_blank" rel="noopener" class="card">
+          <h3>ACP — Agentic Commerce Protocol</h3>
+          <p>An agentic commerce platform created for fair agentic payment and paid work for completed tasks. Jobs are escrowed in USDC, agents are hired by category or open posting, and reputation is tied to the wallet.</p>
+          <div class="tags">
+            <span class="tag">Solana Devnet</span>
+            <span class="tag">USDC Escrow</span>
+            <span class="tag">AI Agents</span>
+          </div>
+          <div class="card-link">Launch app <span class="card-link-arrow">→</span></div>
+        </a>
+
+        <a href="https://devpost.com/software/decon" target="_blank" rel="noopener" class="card">
+          <h3>DeCon</h3>
+          <p>A decentralized prediction market for consulting purposes. Businesses fund the questions they want answered and the crowd bets on outcomes, with payouts priced by an LMSR market maker.</p>
+          <div class="tags">
+            <span class="tag">Prediction Markets</span>
+            <span class="tag">Anchor / Rust</span>
+            <span class="tag">LMSR</span>
+          </div>
+          <div class="card-link">View on Devpost <span class="card-link-arrow">→</span></div>
+        </a>
+
+      </div>
     </div>
   </section>
 
@@ -593,6 +693,52 @@
     <a href="https://github.com/JavierBonill4" target="_blank" rel="noopener">GitHub</a>
     · Blockchain Developer · 2025
   </footer>
+
+  <script>
+    (function () {
+      var COPY = {
+        eth: {
+          title: 'Ethereum Projects',
+          blurb: 'Six SpeedRunEthereum challenges — each deployed live on Sepolia. Click any card to open the live app.'
+        },
+        sol: {
+          title: 'Solana Projects',
+          blurb: 'Programs built with Anchor and Rust on Solana. Click any card to see the project.'
+        }
+      };
+
+      var buttons = document.querySelectorAll('.chain-btn');
+      var title = document.getElementById('projects-title');
+      var blurb = document.getElementById('projects-blurb');
+
+      function show(chain) {
+        buttons.forEach(function (b) {
+          var on = b.dataset.chain === chain;
+          b.classList.toggle('active', on);
+          b.setAttribute('aria-selected', on ? 'true' : 'false');
+        });
+
+        ['eth', 'sol'].forEach(function (key) {
+          var panel = document.getElementById('panel-' + key);
+          if (key === chain) {
+            panel.hidden = false;
+            panel.style.animation = 'none';
+            void panel.offsetWidth;      // restart the fade-in
+            panel.style.animation = '';
+          } else {
+            panel.hidden = true;
+          }
+        });
+
+        title.textContent = COPY[chain].title;
+        blurb.textContent = COPY[chain].blurb;
+      }
+
+      buttons.forEach(function (b) {
+        b.addEventListener('click', function () { show(b.dataset.chain); });
+      });
+    })();
+  </script>
 
 </body>
 </html>
